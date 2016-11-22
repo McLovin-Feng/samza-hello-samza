@@ -1,4 +1,4 @@
-package samza.examples.wikipedia.word_dictionary;
+package samza.failure_test.task;
 
 import org.apache.samza.system.IncomingMessageEnvelope;
 import org.apache.samza.system.OutgoingMessageEnvelope;
@@ -14,15 +14,13 @@ import java.util.Date;
  */
 public class WordDictFeed implements StreamTask {
 
-    private static final SystemStream OUTPUT_STREAM = new SystemStream("kafka", "word-dict-feed");
+    private static final SystemStream OUTPUT_STREAM = new SystemStream("kafka", "word-dict-output");
 
     @SuppressWarnings("unchecked")
     @Override
     public void process(IncomingMessageEnvelope envelope, MessageCollector collector, TaskCoordinator coordinator) {
-        System.out.println(envelope.getMessage());
+//        System.out.println(envelope.getMessage());
         collector.send(new OutgoingMessageEnvelope(OUTPUT_STREAM, envelope.getMessage() + "\t" + (new Date())));
-        /* Commit for every msg */
-//        coordinator.commit(TaskCoordinator.RequestScope.CURRENT_TASK);
     }
 
 }

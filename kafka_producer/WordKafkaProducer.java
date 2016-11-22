@@ -27,7 +27,8 @@ import java.util.*;
 public class WordKafkaProducer {
 
     private final static String URL_STR = "https://raw.githubusercontent.com/dwyl/english-words/master/words.txt";
-    private final static String OUT_TOPIC = "word-dict-original";
+    private final static String OUT_TOPIC = "word-dict-input";
+    private final static String BROKERS = "localhost:9092";
 
     private static void init_cmd(String[] args, Options options) {
         options.addOption("help", "display usage.");
@@ -138,7 +139,7 @@ public class WordKafkaProducer {
 
     private static Producer<String, String> getProducer() {
         Properties props = new Properties();
-        props.put("bootstrap.servers", "localhost:9092");
+        props.put("bootstrap.servers", BROKERS);
         props.put("serializer.class", "kafka.serializer.StringEncoder");
         props.put("acks", "all");
         props.put("key.serializer",
